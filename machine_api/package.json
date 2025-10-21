@@ -5,13 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": " node --env-file=.env .\\src\\index.js"
-    
   },
   "keywords": [],
   "author": "LaudarinKentin - ChereauNatanael",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }
