@@ -4,6 +4,7 @@ const app = express();
 // middlewares
 app.use(express.json());
 
+
 // routes
 const usersRouter = require('./routes/users');
 const machinesRouter = require('./routes/machines');
