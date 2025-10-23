@@ -6,11 +6,9 @@ app.use(express.json());
 
 
 // routes
-const usersRouter = require('./routes/users');
-const machinesRouter = require('./routes/machines');
-
-app.use('/v1/users', usersRouter);
-app.use('/v1/machines', machinesRouter);
+app.use('/v1/auth', require('./routes/auth'));
+app.use('/v1/users', require('./routes/users'));
+app.use('/v1/machines', require('./routes/machines'));
 
 // gestion des erreurs simples
 app.use((req, res) => {
