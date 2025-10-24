@@ -6,9 +6,9 @@ app.use(express.json());
 
 
 // routes
-app.use('/v1/auth', require('./routes/auth'));
-app.use('/v1/users', require('./routes/users'));
-app.use('/v1/machines', require('./routes/machines'));
+app.use('/v1/auth', require('./src/routes/auth'));
+app.use('/v1/users', require('./src/routes/users'));
+app.use('/v1/machines', require('./src/routes/machines'));
 
 // gestion des erreurs simples
 app.use((req, res) => {

@@ -1,13 +1,13 @@
 {
   "name": "machine_api",
   "version": "1.0.0",
-  "main": ".\\src\\index.js",
+  "main": ".\\index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": " node --env-file=.env .\\src\\index.js"
+    "start-dev": " node --env-file=.env .\\index.js"
   },
   "keywords": [],
-  "author": "LaudarinKentin - ChereauNatanael",
+  "author": "LaudarinKentin",
   "license": "ISC",
   "description": "",
   "dependencies": {
@@ -16,6 +16,7 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "path": "^0.12.7",
-    "require": "^0.4.4"
+    "require": "^0.4.4",
+    "uuid": "^13.0.0"
   }
 }

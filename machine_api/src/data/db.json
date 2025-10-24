@@ -4,6 +4,12 @@
       "id": 1,
       "username": "admin",
       "password": "admin123"
+    },
+    {
+      "id": "2e06a8d6-224a-4660-8bba-cfca86976b6a",
+      "username": "peter",
+      "password": "$2b$10$KiJ7RId5/hEo2NpBjR1wJ.NVK9j9bdDdZKU9ToJBAhYD3E2yprtpS",
+      "levelAccess": "user"
     }
   ],
   "machines": []
