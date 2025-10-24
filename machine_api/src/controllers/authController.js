@@ -1,18 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+const loadDB= require ('../data/dbUtille.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
-
-function loadDB() {
-    try {
-        const raw = fs.readFileSync(path.join(__dirname, '../data/db.json'), 'utf8');
-        return JSON.parse(raw || '{}');
-    } catch (e) {
-        return {};
-    }
-}
 
 exports.login = (req, res) => {
     const { username, password } = req.body || {};
