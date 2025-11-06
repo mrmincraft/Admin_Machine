@@ -1,4 +1,5 @@
 const express = require('express');
+const PORT = process.env.PORT;
 const app = express();
 
 // middlewares
@@ -15,4 +16,6 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

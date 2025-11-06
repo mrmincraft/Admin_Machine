@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const machinesController = require('../controllers/machinesController');
+const { authenticated } = require('../midleware/authenticated');
+
+// Appliquer le middleware d'authentification à toutes les routes de ce routeur
+router.use(authenticated);
 
 // CRUD Machines
 router.post('/', machinesController.createMachine);

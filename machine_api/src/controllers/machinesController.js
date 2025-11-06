@@ -2,13 +2,13 @@ let machines = []; // stockage temporaire
 let nextId = 1;
 
 exports.createMachine = (req, res) => {
-  const { nameMachine, statut, levelAccess } = req.body;
+  const { nameMachine, status, levelAccess } = req.body;
 
-  if (!nameMachine || !statut || !levelAccess) {
+  if (!nameMachine || !status || !levelAccess) {
     return res.status(400).json({ error: 'nameMachine, statut, and levelAccess are required' });
   }
 
-  const newMachine = { id: nextId++, nameMachine, statut, levelAccess };
+  const newMachine = { id: nextId++, nameMachine, status, levelAccess };
   machines.push(newMachine);
 
   res.status(201)
