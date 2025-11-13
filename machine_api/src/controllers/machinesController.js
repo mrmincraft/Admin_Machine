@@ -1,54 +1,71 @@
-let machines = []; // stockage temporaire
-let nextId = 1;
+const dbUtile = require('../utile/dbUtille.js');
+const HttpError = require('../utile/httpError');
 
-exports.createMachine = (req, res) => {
-  const { nameMachine, status, levelAccess } = req.body;
+exports.createMachine = (req, res, next) => {
+  try {
+    const { nameMachine, status, levelAccess } = req.body;
 
-  if (!nameMachine || !status || !levelAccess) {
-    return res.status(400).json({ error: 'nameMachine, statut, and levelAccess are required' });
+    if (!nameMachine || !status || !levelAccess) {
+      throw new HttpError(400, 'nameMachine, status, and levelAccess are required');
+    }
+
+    const newMachine = { id: Date.now(), nameMachine, status, levelAccess };
+    dbUtile.addMachine(newMachine);
+
+    res.status(201)
+      .location(`/v1/machines/${newMachine.id}`)
+      .json(newMachine);
+  } catch (err) {
+    next(err);
   }
-
-  const newMachine = { id: nextId++, nameMachine, status, levelAccess };
-  machines.push(newMachine);
-
-  res.status(201)
-    .location(`/v1/machines/${newMachine.id}`)
-    .json(newMachine);
 };
 
-exports.getMachine = (req, res) => {
-  const machine = machines.find(m => m.id === parseInt(req.params.id));
-  if (!machine) return res.status(404).json({ error: 'Machine not found' });
-  res.json(machine);
-};
-
-exports.updateMachine = (req, res) => {
-  const machine = machines.find(m => m.id === parseInt(req.params.id));
-  if (!machine) return res.status(404).json({ error: 'Machine not found' });
-
-  Object.assign(machine, req.body);
-  res.json(machine);
-};
-
-exports.deleteMachine = (req, res) => {
-  machines = machines.filter(m => m.id !== parseInt(req.params.id));
-  res.status(204).end();
-};
-
-// Vérifie si un utilisateur peut accéder à une machine
-exports.accessMachine = (req, res) => {
-  const machine = machines.find(m => m.id === parseInt(req.params.id));
-  if (!machine) return res.status(404).json({ error: 'Machine not found' });
-
-  // Exemple simplifié : on attend que le user.levelAccess soit envoyé dans le corps
-  const { levelAccessUser } = req.body;
-
-  if (!levelAccessUser) {
-    return res.status(400).json({ error: 'levelAccessUser required in body' });
+exports.getMachine = (req, res, next) => {
+  try {
+    const machine = dbUtile.findMachineById(parseInt(req.params.id));
+    if (!machine) {
+      throw new HttpError(404, 'Machine not found');
+    }
+    res.json(machine);
+  } catch (err) {
+    next(err);
   }
+};
 
-  const allowed = levelAccessUser >= machine.levelAccess;
-  if (!allowed) return res.status(403).json({ allowed: false, message: 'Access denied' });
+exports.updateMachine = (req, res, next) => {
+  try {
+    const updates = req.body;
+    const updatedMachine = dbUtile.updateMachine(parseInt(req.params.id), updates);
 
-  res.status(200).json({ allowed: true, message: 'Access granted' });
+    if (!updatedMachine) {
+      throw new HttpError(404, 'Machine not found');
+    }
+
+    res.status(200).json(updatedMachine);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteMachine = (req, res, next) => {
+  try {
+    const machine = dbUtile.findMachineById(parseInt(req.params.id));
+    if (!machine) {
+      throw new HttpError(404, 'Machine not found');
+    }
+
+    dbUtile.deleteMachine(parseInt(req.params.id));
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.accessMachine = (req, res, next) => {
+  try {
+    
+    res.status(200).json({ allowed: true, message: 'Access granted' });
+  } catch (err) {
+    next(err);
+  }
 };
