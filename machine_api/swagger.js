@@ -20,16 +20,21 @@ const swaggerOptions = {
         },
       },
     ],
-  },
-    components:{
-        securitySchemes: {
-          bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-            }
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         },
+      },
     },
+    security: [
+      {
+        bearerAuth: [], // Apply bearerAuth globally to all endpoints
+      },
+    ],
+  },
   apis: ['./src/routes/*.js'], // Path to the API docs
 };
 

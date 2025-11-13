@@ -1,17 +1,17 @@
 const dbUtile = require('../utile/dbUtille.js');
 const HttpError = require('../utile/httpError');
+const { v4: uuidv4 } = require('uuid');
 
 exports.createMachine = (req, res, next) => {
   try {
-    const { nameMachine, status, levelAccess } = req.body;
-
-    if (!nameMachine || !status || !levelAccess) {
-      throw new HttpError(400, 'nameMachine, status, and levelAccess are required');
+    const { name, type, status } = req.body;
+    const levelAccess = req.user.levelAccess || 'user';
+    if (!name || !type || !status) {
+      throw new HttpError(400, 'name, type and status are required');
     }
 
-    const newMachine = { id: Date.now(), nameMachine, status, levelAccess };
+    const newMachine = { id: uuidv4(), name, type, status, levelAccess };
     dbUtile.addMachine(newMachine);
-
     res.status(201)
       .location(`/v1/machines/${newMachine.id}`)
       .json(newMachine);
@@ -22,7 +22,7 @@ exports.createMachine = (req, res, next) => {
 
 exports.getMachine = (req, res, next) => {
   try {
-    const machine = dbUtile.findMachineById(parseInt(req.params.id));
+    const machine = dbUtile.findMachineById(req.params.id);
     if (!machine) {
       throw new HttpError(404, 'Machine not found');
     }
@@ -35,7 +35,7 @@ exports.getMachine = (req, res, next) => {
 exports.updateMachine = (req, res, next) => {
   try {
     const updates = req.body;
-    const updatedMachine = dbUtile.updateMachine(parseInt(req.params.id), updates);
+    const updatedMachine = dbUtile.updateMachine(req.params.id, updates);
 
     if (!updatedMachine) {
       throw new HttpError(404, 'Machine not found');
@@ -49,7 +49,7 @@ exports.updateMachine = (req, res, next) => {
 
 exports.deleteMachine = (req, res, next) => {
   try {
-    const machine = dbUtile.findMachineById(parseInt(req.params.id));
+    const machine = dbUtile.findMachineById(req.params.id);
     if (!machine) {
       throw new HttpError(404, 'Machine not found');
     }

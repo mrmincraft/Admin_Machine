@@ -3,14 +3,29 @@
     {
       "id": 1,
       "username": "admin",
-      "password": "admin123"
+      "password": "admin123",
+      "levelAccess": "admin"
     },
     {
       "id": "1ef5c11f-9041-4065-9918-2f5bba9100b7",
       "username": "retard",
       "password": "$2b$10$Lh9qiwSsNhLkhPssLW8m4uMttSarxjAdLdcytJ4bwrc/brOqCnu7y",
       "levelAccess": "user"
+    },
+    {
+      "id": "3cc158cd-b123-44d4-920a-904493355664",
+      "username": "testuser",
+      "password": "$2b$10$TS/QWuo5oT8h8bNyZ5mYueJQHLXV5UVOCAWUvpsp5sx8HAKNNfez6",
+      "levelAccess": "user"
     }
   ],
-  "machines": []
+  "machines": [
+    {
+      "id": "7f09081b-9e9d-4a25-a060-14f500c03ca2",
+      "name": "string",
+      "type": "string",
+      "status": "active",
+      "levelAccess": "user"
+    }
+  ]
 }

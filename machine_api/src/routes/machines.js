@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const machinesController = require('../controllers/machinesController');
-const { identifyUser } = require('../midleware/identifyUser');
+const { identifyUser } = require('../midleware/autorisation');
 
 // Apply the identifyUser middleware to all machine routes
 router.use(identifyUser);
@@ -19,6 +19,8 @@ router.use(identifyUser);
  *   post:
  *     summary: Create a new machine
  *     tags: [Machines]
+ *     security:
+ *       - bearerAuth: [] # This endpoint requires a Bearer token
  *     requestBody:
  *       required: true
  *       content:
@@ -47,12 +49,14 @@ router.post('/', machinesController.createMachine);
  *   get:
  *     summary: Get a machine by ID
  *     tags: [Machines]
+ *     security:
+ *       - bearerAuth: [] # This endpoint requires a Bearer token
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: Machine ID
  *     responses:
  *       200:
@@ -68,12 +72,14 @@ router.get('/:id', machinesController.getMachine);
  *   patch:
  *     summary: Update a machine by ID
  *     tags: [Machines]
+ *     security:
+ *       - bearerAuth: [] # This endpoint requires a Bearer token
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: Machine ID
  *     requestBody:
  *       required: true
@@ -102,12 +108,14 @@ router.patch('/:id', machinesController.updateMachine);
  *   delete:
  *     summary: Delete a machine by ID
  *     tags: [Machines]
+ *     security:
+ *       - bearerAuth: [] # This endpoint requires a Bearer token
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: Machine ID
  *     responses:
  *       204:
@@ -123,12 +131,14 @@ router.delete('/:id', machinesController.deleteMachine);
  *   post:
  *     summary: Grant user access to a machine
  *     tags: [Machines]
+ *     security:
+ *       - bearerAuth: [] # This endpoint requires a Bearer token
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: Machine ID
  *     requestBody:
  *       required: true

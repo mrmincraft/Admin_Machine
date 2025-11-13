@@ -1,6 +1,6 @@
 const jwt = require('../utile/token.js');
 const dbUtile = require('../utile/dbUtille.js');
-const HttpError = require('../utile/httpError');
+const HttpError = require('../utile/httpError.js');
 
 exports.identifyUser = (req, res, next) => {
     try {
@@ -27,4 +27,15 @@ exports.identifyUser = (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+exports.authorizeAdmin = (req, res, next) => {
+    try {
+        if (req.user.levelAccess !== 'admin') {
+            throw new HttpError(403, 'Admin access required');
+        }
+        next();
+    } catch (err) {
+        next(err);
+    } 
 };

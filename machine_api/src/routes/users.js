@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
+const { authorizeAdmin } = require('../midleware/autorisation');
 
+
+// Apply the identifyUser middleware to all machine routes
+router.use(authorizeAdmin);
 
 /**
  * @swagger
@@ -49,7 +53,7 @@ router.post('/', usersController.createUser);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: User ID
  *     responses:
  *       200:
@@ -70,7 +74,7 @@ router.get('/:id', usersController.getUser);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: User ID
  *     requestBody:
  *       required: true
@@ -104,7 +108,7 @@ router.patch('/:id', usersController.updateUser);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: User ID
  *     responses:
  *       204:
