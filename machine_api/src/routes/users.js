@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
 const { authorizeAdmin } = require('../midleware/autorisation');
-
+const { identifyUser } = require('../midleware/autorisation');
 
 // Apply the identifyUser middleware to all machine routes
+router.use(identifyUser);
 router.use(authorizeAdmin);
 
 /**

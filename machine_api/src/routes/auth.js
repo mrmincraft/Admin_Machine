@@ -51,9 +51,6 @@ router.post('/login', authController.login);
  *                 type: string
  *               password:
  *                 type: string
- *               levelAccess:
- *                 type: string
- *                 default: user
  *     responses:
  *       201:
  *         description: User registered successfully

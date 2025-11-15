@@ -31,6 +31,9 @@ exports.identifyUser = (req, res, next) => {
 
 exports.authorizeAdmin = (req, res, next) => {
     try {
+        if (!req.user) {
+            throw new HttpError(401, 'User not identified');
+        }
         if (req.user.levelAccess !== 'admin') {
             throw new HttpError(403, 'Admin access required');
         }

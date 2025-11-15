@@ -1,18 +1,21 @@
 const dbUtile = require('../utile/dbUtille.js');
 const HttpError = require('../utile/httpError');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
 exports.createUser = (req, res, next) => {
   try {
-    const { username, password, levelAccess = 'user' } = req.body;
+    const { username, password, levelAccess } = req.body;
 
-    if (!username || !password) {
-      throw new HttpError(400, 'username and password are required');
-    }
+    //to be put in a utile file later
+    if (!username || !password || !levelAccess) throw new HttpError(400, 'username, password and levelAccess required');
+    const existingUser = dbUtile.findUserByUsername(username);
+    if (existingUser) throw new HttpError(409, 'Username already exists');
 
-    const newUser = { id: uuidv4(), username, password, levelAccess };
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const newUser = { id: uuidv4(), username, password: hashedPassword, levelAccess };
     dbUtile.addUser(newUser);
-
+    //---------------------------------------
     res.status(201)
       .location(`/v1/users/${newUser.id}`)
       .json(newUser);

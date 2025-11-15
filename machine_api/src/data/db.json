@@ -1,16 +1,10 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "b1a5f4e2-3c4d-4f5a-8e2d-123456789abc",
       "username": "admin",
       "password": "admin123",
       "levelAccess": "admin"
-    },
-    {
-      "id": "1ef5c11f-9041-4065-9918-2f5bba9100b7",
-      "username": "retard",
-      "password": "$2b$10$Lh9qiwSsNhLkhPssLW8m4uMttSarxjAdLdcytJ4bwrc/brOqCnu7y",
-      "levelAccess": "user"
     },
     {
       "id": "3cc158cd-b123-44d4-920a-904493355664",
